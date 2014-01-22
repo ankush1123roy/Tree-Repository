@@ -204,27 +204,5 @@ class BST():
 
 
 
-
-
-
-#A = [8,4,10,7,2,1,3,9,17]
-A = [10,4,3,5,0,-1,2,9,8,12,14,11,7,6]
-T = BST()
-for i in A:
-	Root = T.Insert(i)
-print 'Test for Correct insertion'
-print T.Diameter(Root,0)
-print T.Circumference()
-print T.Height(Root)
-ROOT = Root
-#T.Search(7,ROOT)
-#T.bft()
-print '.......'
-T.LCA(1,7,ROOT)
-#T.Search(7,ROOT)
-
-#T.Mirror(ROOT);T.bft()
-
-
 			
 
