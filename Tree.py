@@ -14,17 +14,17 @@
 	-----------------------------------
 
 	1. Insert a new node in a BST		(DONE)
-	2. Deleted a new from from a BST	
-	3. Inorder Traversal in a BST 		(DONE)
-	4. Preorder Traversal in a BST		(DONE)
-	5. Postorder traversal in a BST		(DONE)
-	6. Mirror of a BST					(DONE)
-	7. Search for an Element in a BST	(DONE)
-	8. Lowest Common Ancestor of a BST	(DONE)
-
-	9. Height of a BST
-	10. Circumference of a BST 
-	11. Diameter of a BST
+	2. Delete a node from a BST	
+	3. Inorder Traversal of a BST 		(DONE)
+	4. Preorder Traversal of a BST		(DONE)
+	5. Postorder traversal of a BST		(DONE)
+	6. Leveloredr traversal of a BST	(DONE)
+	7. Mirror of a BST					(DONE)
+	8. Search for an Element in a BST	(DONE)
+	9. Lowest Common Ancestor of a BST	(DONE)
+	10. Height of a BST					(DONE)
+	11. Circumference of a BST 			(DONE)
+	12. Diameter of a BST				(DONE)
 
 '''
 
@@ -83,6 +83,18 @@ class BST():
 		else:
 			return -1
 
+	def Height(self,node):
+		if node == None:
+			return 0 
+		else:
+			return 1 + max(self.Height(node.left),self.Height(node.right))
+
+	def Diameter(self,node,val):
+		if node != None:
+			val =  max( self.Height(node.left) + self.Height(node.right) + 1,val)
+			self.Diameter(node.left,val)
+			self.Diameter(node.right,val)
+			return val
 
 
 	def Inorder(self,node):
@@ -110,6 +122,38 @@ class BST():
 			print (node.data)
 			self.Preorder(node.left)
 			self.Preorder(node.right)
+
+	def LeafNodes(self,ROOT,Child):
+		if ROOT != None:
+			if ROOT.left == None and ROOT.right == None:
+				Child.append(ROOT.data)
+			self.LeafNodes(ROOT.left,Child)
+			self.LeafNodes(ROOT.right,Child)
+			return Child
+
+	def Circumference(self):
+		LEFT = []
+		RIGHT = []
+		Root = self.root
+		while Root.left != None:
+			LEFT.append(Root.left.data)
+			Root = Root.left
+		Root = self.root
+		while Root.right != None:
+			RIGHT.append(Root.right.data)
+			Root = Root.right
+		RIGHT.reverse()
+		Root = self.root
+		CHILD = self.LeafNodes(Root,[])
+		if LEFT[-1] == CHILD[0]:
+			LEFT = LEFT + CHILD[1:]
+		else:
+			LEFT = LEFT + CHILD
+		if LEFT[-1] == RIGHT[0]:
+			LEFT = LEFT + RIGHT[1:]
+		else:
+			LEFT = LEFT + RIGHT
+		return LEFT + [self.root.data]
 
 	def LCA(self,val1,val2,ROOT):
 
@@ -162,11 +206,16 @@ class BST():
 
 
 
-A = [8,4,10,7,2,1,3,9,17]
+
+#A = [8,4,10,7,2,1,3,9,17]
+A = [10,4,3,5,0,-1,2,9,8,12,14,11,7,6]
 T = BST()
 for i in A:
 	Root = T.Insert(i)
 print 'Test for Correct insertion'
+print T.Diameter(Root,0)
+print T.Circumference()
+print T.Height(Root)
 ROOT = Root
 #T.Search(7,ROOT)
 #T.bft()
